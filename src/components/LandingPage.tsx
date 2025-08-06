@@ -1,5 +1,4 @@
 import React from 'react'
-import { ThemeToggle } from '@/components/ThemeToggle'
 import { ArrowRight, LinkedinLogo, GithubLogo, TwitterLogo } from '@phosphor-icons/react'
 
 interface LandingPageProps {
@@ -10,13 +9,8 @@ export function LandingPage({ onEnterBlog }: LandingPageProps) {
   return (
     <div className="min-h-screen bg-background">
       <div className="max-w-2xl mx-auto px-8 py-16">
-        {/* Theme Toggle */}
-        <div className="flex justify-end mb-16">
-          <ThemeToggle />
-        </div>
-
         {/* Main Content */}
-        <div className="space-y-16">
+        <div className="space-y-16 mt-16">
           {/* Header */}
           <div>
             <h1 className="text-4xl font-light tracking-tight text-foreground mb-6">

@@ -7,7 +7,6 @@ import { samplePost } from '@/lib/sample-data'
 import { PostCard } from '@/components/PostCard'
 import { PostEditor } from '@/components/PostEditor'
 import { PostView } from '@/components/PostView'
-import { ThemeToggle } from '@/components/ThemeToggle'
 import { LandingPage } from '@/components/LandingPage'
 import { Plus, ArrowLeft, Edit3, Eye } from '@phosphor-icons/react'
 
@@ -93,7 +92,6 @@ function App() {
             <ArrowLeft size={16} />
             <span>Back</span>
           </button>
-          <ThemeToggle />
         </header>
 
         {/* Title */}
