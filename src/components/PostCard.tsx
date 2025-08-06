@@ -1,7 +1,7 @@
 import React from 'react'
 import { BlogPost } from '@/lib/types'
 import { formatDate, calculateReadingTime } from '@/lib/blog-utils'
-import { Edit3 } from '@phosphor-icons/react'
+import { Pencil } from '@phosphor-icons/react'
 
 interface PostCardProps {
   post: BlogPost
@@ -34,7 +34,7 @@ export function PostCard({ post, onRead, onEdit, showActions = false }: PostCard
                 }}
                 className="p-1 text-muted-foreground hover:text-foreground transition-colors duration-200"
               >
-                <Edit3 size={16} />
+                <Pencil size={16} />
               </button>
             )}
           </div>

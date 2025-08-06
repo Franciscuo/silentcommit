@@ -30,7 +30,7 @@ export default defineConfig({
         }
       },
       input: {
-  }, main: resolve(projectRoot, 'index.html'),
+        main: resolve(projectRoot, 'index.html'),
         '404': resolve(projectRoot, '404.html')
       }
     }
