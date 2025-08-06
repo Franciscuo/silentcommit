@@ -3,6 +3,7 @@ import { BlogPost } from '@/lib/types'
 import { formatDate, calculateReadingTime } from '@/lib/blog-utils'
 import { MarkdownRenderer } from './MarkdownRenderer'
 import { ArrowLeft, Edit3 } from '@phosphor-icons/react'
+import { useSEO } from '@/hooks/useSEO'
 
 interface PostViewProps {
   post: BlogPost
@@ -13,6 +14,16 @@ interface PostViewProps {
 
 export function PostView({ post, onBack, onEdit, showActions = false }: PostViewProps) {
   const readingTime = calculateReadingTime(post.content)
+
+  // Update SEO for individual post
+  useSEO({
+    title: `${post.title} - Francisco's Dev Blog`,
+    description: post.excerpt || post.content.substring(0, 160) + '...',
+    keywords: `software development, coding, ${post.tags.join(', ')}`,
+    ogTitle: post.title,
+    ogDescription: post.excerpt || post.content.substring(0, 160) + '...',
+    canonical: `https://yoursite.com/post/${post.id}`
+  })
 
   return (
     <div className="min-h-screen bg-background">
@@ -66,6 +77,31 @@ export function PostView({ post, onBack, onEdit, showActions = false }: PostView
         <article className="prose max-w-none">
           <MarkdownRenderer content={post.content} />
         </article>
+
+        {/* Structured Data for Blog Post */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'BlogPosting',
+              headline: post.title,
+              description: post.excerpt || post.content.substring(0, 160),
+              author: {
+                '@type': 'Person',
+                name: 'Francisco',
+                url: 'https://github.com/Franciscuo'
+              },
+              datePublished: post.createdAt,
+              dateModified: post.updatedAt || post.createdAt,
+              keywords: post.tags.join(', '),
+              publisher: {
+                '@type': 'Person',
+                name: 'Francisco'
+              }
+            })
+          }}
+        />
       </div>
     </div>
   )

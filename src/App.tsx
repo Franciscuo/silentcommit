@@ -9,6 +9,7 @@ import { PostEditor } from '@/components/PostEditor'
 import { PostView } from '@/components/PostView'
 import { LandingPage } from '@/components/LandingPage'
 import { Plus, ArrowLeft, Edit3, Eye } from '@phosphor-icons/react'
+import { useSEO } from '@/hooks/useSEO'
 
 function App() {
   const [posts, setPosts] = useKV<BlogPost[]>('blog-posts', [])
@@ -18,6 +19,14 @@ function App() {
   const [selectedTag, setSelectedTag] = useState<string>('')
   const [showDrafts, setShowDrafts] = useState(false)
   const [currentView, setCurrentView] = useState<'landing' | 'blog'>('landing')
+
+  // Set SEO for blog index page
+  useSEO({
+    title: currentView === 'blog' ? "Posts - Francisco's Dev Blog" : "Francisco's Dev Blog - Software Development Insights",
+    description: "Browse software development posts covering React, TypeScript, system architecture, and modern web development practices.",
+    keywords: "software development, coding, programming, react, typescript, web development, engineering, tech blog",
+    canonical: currentView === 'blog' ? "https://yoursite.com/posts" : "https://yoursite.com"
+  })
 
   // Initialize with sample post if no posts exist
   useEffect(() => {

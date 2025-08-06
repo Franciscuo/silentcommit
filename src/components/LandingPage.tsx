@@ -1,11 +1,20 @@
 import React from 'react'
 import { ArrowRight, LinkedinLogo, GithubLogo } from '@phosphor-icons/react'
+import { useSEO } from '@/hooks/useSEO'
 
 interface LandingPageProps {
   onEnterBlog: () => void
 }
 
 export function LandingPage({ onEnterBlog }: LandingPageProps) {
+  // Set SEO for landing page
+  useSEO({
+    title: "Francisco's Dev Blog - Software Development Insights",
+    description: "A developer's thoughts on software engineering, coding practices, and technology insights. Featuring posts on React, TypeScript, and modern web development.",
+    keywords: "software development, coding, programming, react, typescript, web development, engineering, tech blog",
+    canonical: "https://yoursite.com"
+  })
+
   return (
     <div className="min-h-screen bg-background">
       <div className="max-w-2xl mx-auto px-8 py-16">
