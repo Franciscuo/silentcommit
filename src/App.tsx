@@ -8,6 +8,7 @@ import { PostCard } from '@/components/PostCard'
 import { PostEditor } from '@/components/PostEditor'
 import { PostView } from '@/components/PostView'
 import { LandingPage } from '@/components/LandingPage'
+import { NotFoundPage } from '@/components/NotFoundPage'
 import { Plus, ArrowLeft, Edit3, Eye, Download } from '@phosphor-icons/react'
 import { useSEO } from '@/hooks/useSEO'
 import { usePageView, useAnalytics } from '@/hooks/useAnalytics'
@@ -21,30 +22,45 @@ function App() {
   const [isCreating, setIsCreating] = useState(false)
   const [selectedTag, setSelectedTag] = useState<string>('')
   const [showDrafts, setShowDrafts] = useState(false)
-  const [currentView, setCurrentView] = useState<'landing' | 'blog'>('landing')
+  const [currentView, setCurrentView] = useState<'landing' | 'blog' | '404'>('landing')
   const [isOwner, setIsOwner] = useState(false)
 
   const { trackPostView, trackPostEdit, trackPostCreate, trackTagFilter } = useAnalytics()
 
-  // Check if current user is owner
+  // Check if current user is owner and handle 404 parameter
   useEffect(() => {
     spark.user().then(user => {
       setIsOwner(user.isOwner)
     })
+    
+    // Check for 404 parameter or session storage flag
+    const urlParams = new URLSearchParams(window.location.search)
+    const show404FromSession = sessionStorage.getItem('show404')
+    
+    if (urlParams.get('404') === 'true' || show404FromSession === 'true') {
+      setCurrentView('404')
+      // Clean up session storage
+      sessionStorage.removeItem('show404')
+      sessionStorage.removeItem('attemptedUrl')
+      // Clean up URL parameter
+      if (urlParams.get('404')) {
+        window.history.replaceState({}, '', window.location.pathname)
+      }
+    }
   }, [])
 
   // Track page views based on current view
   usePageView(
-    currentView === 'landing' ? '/' : '/posts',
-    currentView === 'landing' ? "Silent Commit" : "Posts - Silent Commit"
+    currentView === 'landing' ? '/' : currentView === 'blog' ? '/posts' : '/404',
+    currentView === 'landing' ? "Silent Commit" : currentView === 'blog' ? "Posts - Silent Commit" : "404 - Silent Commit"
   )
 
   // Set SEO for blog index page
   useSEO({
-    title: currentView === 'blog' ? `Posts - ${siteConfig.name}` : `${siteConfig.name} - Software Development Insights`,
-    description: currentView === 'blog' ? "Browse software development posts covering React, TypeScript, system architecture, and modern web development practices." : siteConfig.description,
+    title: currentView === 'blog' ? `Posts - ${siteConfig.name}` : currentView === '404' ? `Page Not Found - ${siteConfig.name}` : `${siteConfig.name} - Software Development Insights`,
+    description: currentView === 'blog' ? "Browse software development posts covering React, TypeScript, system architecture, and modern web development practices." : currentView === '404' ? "The page you're looking for doesn't exist." : siteConfig.description,
     keywords: "software development, coding, programming, react, typescript, web development, engineering, tech blog",
-    canonical: currentView === 'blog' ? `${siteConfig.url}/posts` : siteConfig.url
+    canonical: currentView === 'blog' ? `${siteConfig.url}/posts` : currentView === '404' ? `${siteConfig.url}/404` : siteConfig.url
   })
 
   // Initialize with sample post if no posts exist
@@ -89,6 +105,16 @@ function App() {
     setIsCreating(true)
   }
 
+  const handleViewPost = (postId: string) => {
+    const post = posts.find(p => p.id === postId)
+    if (!post) {
+      setCurrentView('404')
+      return
+    }
+    trackPostView(post.id, post.title)
+    setSelectedPost(post)
+  }
+
   const handleCloseEditor = () => {
     setIsCreating(false)
     setEditingPost(null)
@@ -97,6 +123,16 @@ function App() {
   // Show landing page
   if (currentView === 'landing') {
     return <LandingPage onEnterBlog={() => setCurrentView('blog')} />
+  }
+
+  // Show 404 page
+  if (currentView === '404') {
+    return (
+      <NotFoundPage
+        onGoHome={() => setCurrentView('landing')}
+        onGoBack={() => window.history.back()}
+      />
+    )
   }
 
   if (selectedPost) {
@@ -189,10 +225,7 @@ function App() {
               <PostCard
                 key={post.id}
                 post={post}
-                onRead={() => {
-                  trackPostView(post.id, post.title)
-                  setSelectedPost(post)
-                }}
+                onRead={() => handleViewPost(post.id)}
                 onEdit={() => handleEditPost(post)}
                 showActions={true}
               />

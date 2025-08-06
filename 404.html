@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Page Not Found - Silent Commit</title>
+    <meta name="description" content="The page you're looking for doesn't exist or has been moved." />
+    <meta name="robots" content="noindex, nofollow" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Page Not Found - Silent Commit" />
+    <meta property="og:description" content="The page you're looking for doesn't exist or has been moved." />
+    <meta property="og:url" content="https://silentcommit.com/404" />
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Page Not Found - Silent Commit" />
+    <meta name="twitter:description" content="The page you're looking for doesn't exist or has been moved." />
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="/src/main.css" rel="stylesheet" />
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-9X2C17JTTJ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-9X2C17JTTJ');
+      
+      // Track 404 page view
+      gtag('event', 'page_view', {
+        page_title: '404 - Page Not Found',
+        page_location: window.location.href
+      });
+    </script>
+    
+    <!-- Redirect to home with 404 state -->
+    <script>
+      // Store the attempted URL and redirect to home with 404 flag
+      sessionStorage.setItem('show404', 'true');
+      sessionStorage.setItem('attemptedUrl', window.location.pathname);
+      window.location.href = '/?404=true';
+    </script>
+</head>
+
+<body>
+    <!-- Fallback content for users with JavaScript disabled -->
+    <div style="min-height: 100vh; background: oklch(0.06 0 0); color: oklch(0.93 0 0); display: flex; align-items: center; justify-content: center; font-family: 'Inter', sans-serif; padding: 2rem;">
+        <div style="text-align: center; max-width: 28rem;">
+            <h1 style="font-size: 3.75rem; font-weight: 300; margin-bottom: 1rem;">404</h1>
+            <div style="width: 4rem; height: 1px; background: oklch(0.7 0 0); margin: 0 auto 2rem;"></div>
+            <h2 style="font-size: 1.25rem; font-weight: 300; margin-bottom: 1rem;">Page not found</h2>
+            <p style="color: oklch(0.7 0 0); line-height: 1.6; margin-bottom: 3rem;">
+                The page you're looking for doesn't exist or has been moved.
+            </p>
+            <a href="/" style="display: inline-block; padding: 0.75rem 1.5rem; background: oklch(0.93 0 0); color: oklch(0.06 0 0); text-decoration: none; border-radius: 0.25rem;">
+                Go home
+            </a>
+        </div>
+    </div>
+</body>
+
+</html>
