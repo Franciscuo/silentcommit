@@ -8,48 +8,48 @@
 }
 
 :root {
-  --background: oklch(0.98 0 0);
-  --foreground: oklch(0.15 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.15 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.15 0 0);
-  --primary: oklch(0.2 0 0);
-  --primary-foreground: oklch(0.98 0 0);
-  --secondary: oklch(0.95 0 0);
-  --secondary-foreground: oklch(0.2 0 0);
-  --muted: oklch(0.95 0 0);
-  --muted-foreground: oklch(0.5 0 0);
-  --accent: oklch(0.6 0.15 240);
-  --accent-foreground: oklch(0.98 0 0);
+  --background: oklch(0.99 0 0);
+  --foreground: oklch(0.12 0 0);
+  --card: oklch(0.99 0 0);
+  --card-foreground: oklch(0.12 0 0);
+  --popover: oklch(0.99 0 0);
+  --popover-foreground: oklch(0.12 0 0);
+  --primary: oklch(0.12 0 0);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.96 0 0);
+  --secondary-foreground: oklch(0.12 0 0);
+  --muted: oklch(0.96 0 0);
+  --muted-foreground: oklch(0.55 0 0);
+  --accent: oklch(0.12 0 0);
+  --accent-foreground: oklch(0.99 0 0);
   --destructive: oklch(0.6 0.2 20);
-  --destructive-foreground: oklch(0.98 0 0);
-  --border: oklch(0.9 0 0);
-  --input: oklch(0.9 0 0);
-  --ring: oklch(0.6 0.15 240);
-  --radius: 0.5rem;
+  --destructive-foreground: oklch(0.99 0 0);
+  --border: oklch(0.93 0 0);
+  --input: oklch(0.96 0 0);
+  --ring: oklch(0.12 0 0);
+  --radius: 0.25rem;
 }
 
 [data-theme="dark"] {
-  --background: oklch(0.08 0 0);
-  --foreground: oklch(0.98 0 0);
-  --card: oklch(0.12 0 0);
-  --card-foreground: oklch(0.98 0 0);
-  --popover: oklch(0.12 0 0);
-  --popover-foreground: oklch(0.98 0 0);
-  --primary: oklch(0.98 0 0);
-  --primary-foreground: oklch(0.08 0 0);
-  --secondary: oklch(0.15 0 0);
-  --secondary-foreground: oklch(0.98 0 0);
-  --muted: oklch(0.15 0 0);
-  --muted-foreground: oklch(0.65 0 0);
-  --accent: oklch(0.7 0.15 240);
-  --accent-foreground: oklch(0.08 0 0);
+  --background: oklch(0.06 0 0);
+  --foreground: oklch(0.93 0 0);
+  --card: oklch(0.06 0 0);
+  --card-foreground: oklch(0.93 0 0);
+  --popover: oklch(0.06 0 0);
+  --popover-foreground: oklch(0.93 0 0);
+  --primary: oklch(0.93 0 0);
+  --primary-foreground: oklch(0.06 0 0);
+  --secondary: oklch(0.1 0 0);
+  --secondary-foreground: oklch(0.93 0 0);
+  --muted: oklch(0.1 0 0);
+  --muted-foreground: oklch(0.7 0 0);
+  --accent: oklch(0.93 0 0);
+  --accent-foreground: oklch(0.06 0 0);
   --destructive: oklch(0.7 0.2 20);
-  --destructive-foreground: oklch(0.98 0 0);
-  --border: oklch(0.2 0 0);
-  --input: oklch(0.2 0 0);
-  --ring: oklch(0.7 0.15 240);
+  --destructive-foreground: oklch(0.99 0 0);
+  --border: oklch(0.15 0 0);
+  --input: oklch(0.1 0 0);
+  --ring: oklch(0.93 0 0);
 }
 
 @theme {
@@ -90,49 +90,50 @@ body {
   font-family: 'JetBrains Mono', monospace;
 }
 
-/* Markdown Styles */
+/* Simplified Markdown Styles */
 .prose {
   @apply max-w-none text-foreground;
+  line-height: 1.7;
 }
 
 .prose h1 {
-  @apply text-3xl font-bold text-foreground mb-6 mt-8 first:mt-0;
+  @apply text-2xl font-medium text-foreground mb-6 mt-8 first:mt-0;
 }
 
 .prose h2 {
-  @apply text-2xl font-semibold text-foreground mb-4 mt-8 first:mt-0;
+  @apply text-xl font-medium text-foreground mb-4 mt-8 first:mt-0;
 }
 
 .prose h3 {
-  @apply text-xl font-medium text-foreground mb-3 mt-6 first:mt-0;
+  @apply text-lg font-medium text-foreground mb-3 mt-6 first:mt-0;
 }
 
 .prose p {
-  @apply text-foreground mb-4 leading-relaxed;
+  @apply text-foreground mb-6 leading-relaxed;
 }
 
 .prose a {
-  @apply text-accent hover:underline;
+  @apply text-foreground underline hover:no-underline;
 }
 
 .prose ul, .prose ol {
-  @apply mb-4 pl-6;
+  @apply mb-6 pl-6;
 }
 
 .prose li {
-  @apply mb-1;
+  @apply mb-2;
 }
 
 .prose blockquote {
-  @apply border-l-4 border-accent pl-4 italic text-muted-foreground my-4;
+  @apply border-l-2 border-muted-foreground pl-6 italic text-muted-foreground my-6;
 }
 
 .prose code {
-  @apply font-mono text-sm bg-secondary px-1 py-0.5 rounded;
+  @apply font-mono text-sm bg-muted px-2 py-1 rounded;
 }
 
 .prose pre {
-  @apply font-mono text-sm bg-secondary p-4 rounded-lg overflow-x-auto my-4;
+  @apply font-mono text-sm bg-muted p-6 rounded overflow-x-auto my-6;
 }
 
 .prose pre code {

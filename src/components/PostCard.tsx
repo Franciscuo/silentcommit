@@ -1,10 +1,7 @@
 import React from 'react'
-import { Card, CardContent, CardHeader } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
 import { BlogPost } from '@/lib/types'
 import { formatDate, calculateReadingTime } from '@/lib/blog-utils'
-import { Calendar, Clock, Edit } from '@phosphor-icons/react'
+import { Edit3 } from '@phosphor-icons/react'
 
 interface PostCardProps {
   post: BlogPost
@@ -17,60 +14,58 @@ export function PostCard({ post, onRead, onEdit, showActions = false }: PostCard
   const readingTime = calculateReadingTime(post.content)
 
   return (
-    <Card className="transition-all duration-200 hover:shadow-lg cursor-pointer group">
-      <CardHeader onClick={onRead} className="pb-3">
+    <article className="group cursor-pointer" onClick={onRead}>
+      <div className="space-y-3 py-6 border-b border-border/50">
         <div className="flex items-start justify-between gap-4">
-          <h3 className="text-2xl font-semibold text-foreground group-hover:text-accent transition-colors">
+          <h2 className="text-xl font-medium text-foreground group-hover:opacity-70 transition-opacity duration-200">
             {post.title}
-          </h3>
-          {!post.published && (
-            <Badge variant="secondary" className="text-xs">
-              Draft
-            </Badge>
-          )}
+          </h2>
+          <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+            {!post.published && (
+              <span className="text-xs text-muted-foreground bg-muted px-2 py-1 rounded">
+                Draft
+              </span>
+            )}
+            {showActions && onEdit && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation()
+                  onEdit()
+                }}
+                className="p-1 text-muted-foreground hover:text-foreground transition-colors duration-200"
+              >
+                <Edit3 size={16} />
+              </button>
+            )}
+          </div>
         </div>
         
-        <div className="flex items-center gap-4 text-sm text-muted-foreground">
-          <div className="flex items-center gap-1">
-            <Calendar size={14} />
-            <span>{formatDate(post.createdAt)}</span>
-          </div>
-          <div className="flex items-center gap-1">
-            <Clock size={14} />
-            <span>{readingTime} min read</span>
-          </div>
-        </div>
-      </CardHeader>
-
-      <CardContent onClick={onRead} className="pt-0 pb-4">
-        <p className="text-muted-foreground leading-relaxed mb-4">
+        <p className="text-muted-foreground leading-relaxed">
           {post.excerpt}
         </p>
         
-        <div className="flex items-center justify-between">
-          <div className="flex flex-wrap gap-2">
-            {post.tags.map(tag => (
-              <Badge key={tag} variant="outline" className="text-xs">
-                {tag}
-              </Badge>
-            ))}
+        <div className="flex items-center justify-between text-sm">
+          <div className="flex items-center gap-4 text-muted-foreground">
+            <span>{formatDate(post.createdAt)}</span>
+            <span>{readingTime} min read</span>
           </div>
           
-          {showActions && onEdit && (
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={(e) => {
-                e.stopPropagation()
-                onEdit()
-              }}
-              className="opacity-0 group-hover:opacity-100 transition-opacity"
-            >
-              <Edit size={16} />
-            </Button>
+          {post.tags.length > 0 && (
+            <div className="flex gap-2">
+              {post.tags.slice(0, 2).map(tag => (
+                <span key={tag} className="text-xs text-muted-foreground">
+                  {tag}
+                </span>
+              ))}
+              {post.tags.length > 2 && (
+                <span className="text-xs text-muted-foreground">
+                  +{post.tags.length - 2}
+                </span>
+              )}
+            </div>
           )}
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </article>
   )
 }

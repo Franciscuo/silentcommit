@@ -1,8 +1,6 @@
 import React from 'react'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent } from '@/components/ui/card'
 import { ThemeToggle } from '@/components/ThemeToggle'
-import { ArrowRight, Code, FileText, LinkedinLogo, GithubLogo, TwitterLogo } from '@phosphor-icons/react'
+import { ArrowRight, LinkedinLogo, GithubLogo, TwitterLogo } from '@phosphor-icons/react'
 
 interface LandingPageProps {
   onEnterBlog: () => void
@@ -11,134 +9,78 @@ interface LandingPageProps {
 export function LandingPage({ onEnterBlog }: LandingPageProps) {
   return (
     <div className="min-h-screen bg-background">
-      <div className="max-w-4xl mx-auto p-6">
-        {/* Header with Theme Toggle */}
-        <header className="mb-16 relative">
-          <div className="absolute top-0 right-0">
-            <ThemeToggle />
-          </div>
-        </header>
+      <div className="max-w-2xl mx-auto px-8 py-16">
+        {/* Theme Toggle */}
+        <div className="flex justify-end mb-16">
+          <ThemeToggle />
+        </div>
 
-        {/* Hero Section */}
-        <div className="text-center mb-16">
-          <div className="flex items-center justify-center gap-4 mb-6">
-            <div className="w-16 h-16 bg-primary rounded-xl flex items-center justify-center">
-              <Code size={32} className="text-primary-foreground" />
+        {/* Main Content */}
+        <div className="space-y-16">
+          {/* Header */}
+          <div>
+            <h1 className="text-4xl font-light tracking-tight text-foreground mb-6">
+              Developer Blog
+            </h1>
+            <p className="text-lg text-muted-foreground leading-relaxed">
+              Thoughts on software architecture, development practices, and building 
+              systems that scale. Written for developers who care about craft.
+            </p>
+          </div>
+
+          {/* Enter Blog */}
+          <div>
+            <button
+              onClick={onEnterBlog}
+              className="group flex items-center gap-2 text-foreground hover:text-muted-foreground transition-colors duration-200"
+            >
+              <span className="text-lg">Read posts</span>
+              <ArrowRight 
+                size={18} 
+                className="group-hover:translate-x-1 transition-transform duration-200" 
+              />
+            </button>
+          </div>
+
+          {/* Topics */}
+          <div>
+            <h2 className="text-xl font-light text-foreground mb-4">Topics I write about</h2>
+            <div className="text-muted-foreground space-y-1">
+              <div>• System architecture and design patterns</div>
+              <div>• Development workflows and tooling</div>
+              <div>• Code quality and maintainability</div>
+              <div>• Performance and scalability</div>
+              <div>• Team practices and technical leadership</div>
             </div>
-            <h1 className="text-5xl font-bold text-foreground">Dev Blog</h1>
           </div>
-          
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8 leading-relaxed">
-            Welcome to my corner of the internet. I write about software development, 
-            system architecture, and the craft of building things that matter.
-          </p>
 
-          <Button 
-            onClick={onEnterBlog} 
-            size="lg" 
-            className="flex items-center gap-2 mx-auto"
-          >
-            <FileText size={20} />
-            Read My Posts
-            <ArrowRight size={16} />
-          </Button>
-        </div>
-
-        {/* About Section */}
-        <Card className="mb-16">
-          <CardContent className="p-8">
-            <h2 className="text-2xl font-semibold mb-4 text-foreground">About This Blog</h2>
-            <p className="text-muted-foreground leading-relaxed mb-4">
-              This is a curated collection of thoughts and insights from my journey in software development. 
-              You'll find posts about modern web technologies, architectural patterns, development workflows, 
-              and lessons learned from building real-world applications.
-            </p>
-            <p className="text-muted-foreground leading-relaxed">
-              Each post is written with the practicing developer in mind - focusing on practical insights 
-              rather than surface-level tutorials.
-            </p>
-          </CardContent>
-        </Card>
-
-        {/* Quick Index */}
-        <div className="mb-12">
-          <h2 className="text-2xl font-semibold mb-6 text-foreground">What You'll Find Here</h2>
-          <div className="grid md:grid-cols-3 gap-6">
-            <Card>
-              <CardContent className="p-6">
-                <div className="w-12 h-12 bg-accent rounded-lg flex items-center justify-center mb-4">
-                  <Code size={24} className="text-accent-foreground" />
-                </div>
-                <h3 className="font-semibold mb-2 text-foreground">Technical Deep Dives</h3>
-                <p className="text-sm text-muted-foreground">
-                  In-depth explorations of complex problems and their elegant solutions.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardContent className="p-6">
-                <div className="w-12 h-12 bg-accent rounded-lg flex items-center justify-center mb-4">
-                  <FileText size={24} className="text-accent-foreground" />
-                </div>
-                <h3 className="font-semibold mb-2 text-foreground">Architecture Insights</h3>
-                <p className="text-sm text-muted-foreground">
-                  Thoughts on building scalable, maintainable software systems.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardContent className="p-6">
-                <div className="w-12 h-12 bg-accent rounded-lg flex items-center justify-center mb-4">
-                  <ArrowRight size={24} className="text-accent-foreground" />
-                </div>
-                <h3 className="font-semibold mb-2 text-foreground">Development Process</h3>
-                <p className="text-sm text-muted-foreground">
-                  Best practices, tools, and workflows that improve developer productivity.
-                </p>
-              </CardContent>
-            </Card>
+          {/* Social Links */}
+          <div>
+            <h2 className="text-xl font-light text-foreground mb-4">Connect</h2>
+            <div className="flex gap-6">
+              <a
+                href="#"
+                className="text-muted-foreground hover:text-foreground transition-colors duration-200"
+                onClick={(e) => e.preventDefault()}
+              >
+                <LinkedinLogo size={20} />
+              </a>
+              <a
+                href="#"
+                className="text-muted-foreground hover:text-foreground transition-colors duration-200"
+                onClick={(e) => e.preventDefault()}
+              >
+                <GithubLogo size={20} />
+              </a>
+              <a
+                href="#"
+                className="text-muted-foreground hover:text-foreground transition-colors duration-200"
+                onClick={(e) => e.preventDefault()}
+              >
+                <TwitterLogo size={20} />
+              </a>
+            </div>
           </div>
-        </div>
-
-        {/* Social Links */}
-        <div className="text-center">
-          <h3 className="text-lg font-medium mb-6 text-foreground">Connect With Me</h3>
-          <div className="flex items-center justify-center gap-4">
-            <Button
-              variant="outline"
-              size="sm"
-              className="flex items-center gap-2"
-              onClick={() => window.open('#', '_blank')}
-            >
-              <LinkedinLogo size={16} />
-              LinkedIn
-            </Button>
-            
-            <Button
-              variant="outline"
-              size="sm"
-              className="flex items-center gap-2"
-              onClick={() => window.open('#', '_blank')}
-            >
-              <GithubLogo size={16} />
-              GitHub
-            </Button>
-            
-            <Button
-              variant="outline"
-              size="sm"
-              className="flex items-center gap-2"
-              onClick={() => window.open('#', '_blank')}
-            >
-              <TwitterLogo size={16} />
-              Twitter
-            </Button>
-          </div>
-          <p className="text-sm text-muted-foreground mt-4">
-            Replace the '#' links above with your actual social media profiles
-          </p>
         </div>
       </div>
     </div>

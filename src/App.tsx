@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useKV } from '@github/spark/hooks'
 import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
 import { BlogPost } from '@/lib/types'
 import { sortPostsByDate, filterPostsByTag, getAllTags } from '@/lib/blog-utils'
 import { samplePost } from '@/lib/sample-data'
@@ -10,7 +9,7 @@ import { PostEditor } from '@/components/PostEditor'
 import { PostView } from '@/components/PostView'
 import { ThemeToggle } from '@/components/ThemeToggle'
 import { LandingPage } from '@/components/LandingPage'
-import { Plus, FileText, User, ArrowLeft, Home } from '@phosphor-icons/react'
+import { Plus, ArrowLeft, Edit3, Eye } from '@phosphor-icons/react'
 
 function App() {
   const [posts, setPosts] = useKV<BlogPost[]>('blog-posts', [])
@@ -84,83 +83,66 @@ function App() {
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="max-w-4xl mx-auto p-6">
+      <div className="max-w-3xl mx-auto px-8 py-16">
         {/* Header */}
-        <header className="mb-12 text-center relative">
-          <div className="absolute top-0 left-0">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setCurrentView('landing')}
-              className="flex items-center gap-2"
-            >
-              <Home size={16} />
-              Home
-            </Button>
-          </div>
-          <div className="absolute top-0 right-0">
-            <ThemeToggle />
-          </div>
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center">
-              <User size={24} className="text-primary-foreground" />
-            </div>
-            <h1 className="text-4xl font-bold text-foreground">Dev Blog</h1>
-          </div>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Thoughts on software development, architecture, and building things that matter.
-          </p>
+        <header className="flex items-center justify-between mb-16">
+          <button
+            onClick={() => setCurrentView('landing')}
+            className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors duration-200"
+          >
+            <ArrowLeft size={16} />
+            <span>Back</span>
+          </button>
+          <ThemeToggle />
         </header>
 
-        {/* Simple Navigation */}
-        <div className="flex items-center justify-between mb-8">
-          <div className="flex items-center gap-4">
-            <Button
-              variant={!showDrafts ? 'default' : 'outline'}
+        {/* Title */}
+        <div className="mb-12">
+          <h1 className="text-3xl font-light tracking-tight text-foreground mb-4">Posts</h1>
+          <div className="flex items-center gap-6 text-sm text-muted-foreground">
+            <button
               onClick={() => setShowDrafts(false)}
-              className="flex items-center gap-2"
+              className={showDrafts ? 'opacity-60 hover:opacity-100 transition-opacity' : ''}
             >
-              <FileText size={16} />
               Published ({publishedPosts.length})
-            </Button>
+            </button>
             {draftPosts.length > 0 && (
-              <Button
-                variant={showDrafts ? 'default' : 'outline'}
+              <button
                 onClick={() => setShowDrafts(true)}
-                className="flex items-center gap-2"
+                className={!showDrafts ? 'opacity-60 hover:opacity-100 transition-opacity' : ''}
               >
-                <FileText size={16} />
                 Drafts ({draftPosts.length})
-              </Button>
+              </button>
             )}
           </div>
-
-          <Button onClick={handleCreateNew} className="flex items-center gap-2">
-            <Plus size={16} />
-            New Post
-          </Button>
         </div>
 
         {/* Tag Filter */}
         {allTags.length > 0 && (
           <div className="mb-8">
             <div className="flex flex-wrap gap-2">
-              <Button
-                variant={selectedTag === '' ? 'default' : 'outline'}
-                size="sm"
+              <button
                 onClick={() => setSelectedTag('')}
+                className={`px-3 py-1 text-sm rounded transition-colors duration-200 ${
+                  selectedTag === '' 
+                    ? 'bg-foreground text-background' 
+                    : 'text-muted-foreground hover:text-foreground'
+                }`}
               >
                 All
-              </Button>
+              </button>
               {allTags.map(tag => (
-                <Button
+                <button
                   key={tag}
-                  variant={selectedTag === tag ? 'default' : 'outline'}
-                  size="sm"
                   onClick={() => setSelectedTag(tag)}
+                  className={`px-3 py-1 text-sm rounded transition-colors duration-200 ${
+                    selectedTag === tag 
+                      ? 'bg-foreground text-background' 
+                      : 'text-muted-foreground hover:text-foreground'
+                  }`}
                 >
                   {tag}
-                </Button>
+                </button>
               ))}
             </div>
           </div>
@@ -168,7 +150,7 @@ function App() {
 
         {/* Posts List */}
         {filteredPosts.length > 0 ? (
-          <div className="space-y-6">
+          <div className="space-y-8">
             {filteredPosts.map(post => (
               <PostCard
                 key={post.id}
@@ -181,22 +163,27 @@ function App() {
           </div>
         ) : (
           <div className="text-center py-16">
-            <FileText size={64} className="mx-auto text-muted-foreground mb-4" />
-            <h3 className="text-xl font-semibold mb-2">
-              {!showDrafts ? 'No published posts yet' : 'No drafts yet'}
-            </h3>
             <p className="text-muted-foreground mb-6">
-              {!showDrafts 
-                ? 'Start writing and share your thoughts with the world.'
-                : 'Create a new post to get started.'
-              }
+              {!showDrafts ? 'No published posts yet.' : 'No drafts yet.'}
             </p>
-            <Button onClick={handleCreateNew} className="flex items-center gap-2">
-              <Plus size={16} />
-              Create Your First Post
-            </Button>
+            <button
+              onClick={handleCreateNew}
+              className="text-foreground hover:text-muted-foreground transition-colors duration-200"
+            >
+              Create your first post
+            </button>
           </div>
         )}
+
+        {/* Floating Create Button */}
+        <div className="fixed bottom-8 right-8">
+          <button
+            onClick={handleCreateNew}
+            className="w-12 h-12 bg-foreground text-background rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-shadow duration-200"
+          >
+            <Plus size={20} />
+          </button>
+        </div>
 
         {/* Post Editor */}
         <PostEditor

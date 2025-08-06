@@ -1,5 +1,4 @@
 import React from 'react'
-import { Button } from '@/components/ui/button'
 import { Moon, Sun } from '@phosphor-icons/react'
 import { useKV } from '@github/spark/hooks'
 
@@ -18,17 +17,15 @@ export function ThemeToggle() {
   }, [])
 
   return (
-    <Button
-      variant="ghost"
-      size="sm"
+    <button
       onClick={toggleTheme}
-      className="h-9 w-9 p-0"
+      className="p-2 text-muted-foreground hover:text-foreground transition-colors duration-200"
     >
       {theme === 'light' ? (
         <Moon size={18} />
       ) : (
         <Sun size={18} />
       )}
-    </Button>
+    </button>
   )
 }

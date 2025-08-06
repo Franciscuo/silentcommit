@@ -1,10 +1,8 @@
 import React from 'react'
-import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
 import { BlogPost } from '@/lib/types'
 import { formatDate, calculateReadingTime } from '@/lib/blog-utils'
 import { MarkdownRenderer } from './MarkdownRenderer'
-import { ArrowLeft, Edit, Calendar, Clock } from '@phosphor-icons/react'
+import { ArrowLeft, Edit3 } from '@phosphor-icons/react'
 
 interface PostViewProps {
   post: BlogPost
@@ -17,59 +15,58 @@ export function PostView({ post, onBack, onEdit, showActions = false }: PostView
   const readingTime = calculateReadingTime(post.content)
 
   return (
-    <div className="min-h-screen bg-background p-6">
-      <div className="max-w-4xl mx-auto">
-        <div className="mb-6">
-          <Button
-            variant="ghost"
+    <div className="min-h-screen bg-background">
+      <div className="max-w-3xl mx-auto px-8 py-16">
+        {/* Header */}
+        <div className="flex items-center justify-between mb-16">
+          <button
             onClick={onBack}
-            className="mb-4 -ml-4"
+            className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors duration-200"
           >
-            <ArrowLeft size={16} className="mr-2" />
-            Back to posts
-          </Button>
+            <ArrowLeft size={16} />
+            <span>Back</span>
+          </button>
+          {showActions && onEdit && (
+            <button
+              onClick={onEdit}
+              className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors duration-200"
+            >
+              <Edit3 size={16} />
+              <span>Edit</span>
+            </button>
+          )}
+        </div>
 
-        <div className="flex items-start justify-between gap-4 mb-4">
-          <h1 className="text-4xl font-bold text-foreground leading-tight">
+        {/* Post Header */}
+        <header className="mb-12">
+          <h1 className="text-3xl font-light tracking-tight text-foreground mb-6 leading-tight">
             {post.title}
           </h1>
-          {showActions && onEdit && (
-            <Button variant="outline" onClick={onEdit}>
-              <Edit size={16} className="mr-2" />
-              Edit
-            </Button>
-          )}
-        </div>
-
-        <div className="flex items-center gap-6 text-muted-foreground mb-6">
-          <div className="flex items-center gap-2">
-            <Calendar size={16} />
+          
+          <div className="flex items-center gap-6 text-sm text-muted-foreground mb-4">
             <span>{formatDate(post.createdAt)}</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <Clock size={16} />
             <span>{readingTime} min read</span>
+            {!post.published && (
+              <span className="bg-muted px-2 py-1 rounded text-xs">Draft</span>
+            )}
           </div>
-          {!post.published && (
-            <Badge variant="secondary">Draft</Badge>
+
+          {post.tags.length > 0 && (
+            <div className="flex flex-wrap gap-2">
+              {post.tags.map(tag => (
+                <span key={tag} className="text-xs text-muted-foreground">
+                  {tag}
+                </span>
+              ))}
+            </div>
           )}
-        </div>
+        </header>
 
-        {post.tags.length > 0 && (
-          <div className="flex flex-wrap gap-2 mb-8">
-            {post.tags.map(tag => (
-              <Badge key={tag} variant="outline">
-                {tag}
-              </Badge>
-            ))}
-          </div>
-        )}
+        {/* Post Content */}
+        <article className="prose max-w-none">
+          <MarkdownRenderer content={post.content} />
+        </article>
       </div>
-
-      <article className="prose max-w-none">
-        <MarkdownRenderer content={post.content} />
-      </article>
     </div>
-  </div>
   )
 }
