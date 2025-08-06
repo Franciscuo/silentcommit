@@ -8,58 +8,77 @@ import { GithubLogo, LinkedinLogo } from '@phosphor-icons/react';
   description="A developer's thoughts on software engineering, coding practices, and technology insights. Featuring posts on React, TypeScript, and modern web development."
   keywords="software development, coding, programming, react, typescript, web development, engineering, tech blog"
 >
-  <main class="min-h-screen bg-background text-foreground">
-    <!-- Main Section -->
-    <section class="relative min-h-screen flex items-center justify-center px-8">
-      <div class="max-w-4xl mx-auto text-center space-y-12">
-        <div class="space-y-8">
-          <h1 class="text-6xl font-light tracking-tight text-foreground">
+  <main class="min-h-screen bg-background">
+    <div class="max-w-2xl mx-auto px-8 py-16">
+      <!-- Main Content -->
+      <div class="space-y-16 mt-16">
+        <!-- Header -->
+        <div>
+          <h1 class="text-4xl font-light tracking-tight text-foreground mb-6">
             Silent Commit
           </h1>
-          <p class="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Insights on software engineering, architecture, and development practices
+          <p class="text-lg text-muted-foreground leading-relaxed">
+            Thoughts on software architecture, development practices, and building 
+            systems that scale. Written for developers who care about craft.
           </p>
-          
-          <div class="space-y-4 text-foreground leading-relaxed max-w-2xl mx-auto text-center">
-            <p>
-              Practical knowledge from building and maintaining production systems. Focus on actionable insights for modern software development.
-            </p>
-            <p>
-              System architecture • React patterns • TypeScript best practices • Real-world engineering solutions
-            </p>
+        </div>
+
+        <!-- Enter Blog -->
+        <div>
+          <a
+            href="/posts"
+            class="group flex items-center gap-2 text-foreground hover:text-muted-foreground transition-colors duration-200"
+          >
+            <span class="text-lg">Read posts</span>
+            <svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              width="18" 
+              height="18" 
+              fill="currentColor" 
+              viewBox="0 0 256 256"
+              class="group-hover:translate-x-1 transition-transform duration-200"
+            >
+              <path d="m221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"></path>
+            </svg>
+          </a>
+        </div>
+
+        <!-- Topics -->
+        <div>
+          <h2 class="text-xl font-light text-foreground mb-4">Topics I write about</h2>
+          <div class="text-muted-foreground space-y-1">
+            <div>• System architecture and design patterns</div>
+            <div>• Development workflows and tooling</div>
+            <div>• Code quality and maintainability</div>
+            <div>• Performance and scalability</div>
+            <div>• Team practices and technical leadership</div>
           </div>
         </div>
-        
-        <div class="flex items-center justify-center gap-8 pt-8">
-          <a 
-            href="/posts" 
-            class="px-6 py-2 bg-foreground text-background rounded transition-colors hover:bg-muted-foreground text-sm"
-          >
-            Read Posts
-          </a>
-          <div class="flex items-center gap-4">
-            <a 
-              href="https://github.com/Franciscuo" 
-              target="_blank" 
+
+        <!-- Social Links -->
+        <div>
+          <h2 class="text-xl font-light text-foreground mb-4">Connect</h2>
+          <div class="flex gap-6">
+            <a
+              href="https://www.linkedin.com/in/franciscuo/"
+              target="_blank"
               rel="noopener noreferrer"
-              class="text-muted-foreground hover:text-foreground transition-colors"
-              aria-label="GitHub Profile"
+              class="text-muted-foreground hover:text-foreground transition-colors duration-200"
             >
-              <GithubLogo size={24} />
+              <LinkedinLogo size={20} />
             </a>
-            <a 
-              href="https://www.linkedin.com/in/franciscuo/" 
-              target="_blank" 
+            <a
+              href="https://github.com/Franciscuo"
+              target="_blank"
               rel="noopener noreferrer"
-              class="text-muted-foreground hover:text-foreground transition-colors"
-              aria-label="LinkedIn Profile"
+              class="text-muted-foreground hover:text-foreground transition-colors duration-200"
             >
-              <LinkedinLogo size={24} />
+              <GithubLogo size={20} />
             </a>
           </div>
         </div>
       </div>
-    </section>
+    </div>
   </main>
 </Layout>
 
