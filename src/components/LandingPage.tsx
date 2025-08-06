@@ -1,5 +1,5 @@
 import React from 'react'
-import { ArrowRight, LinkedinLogo, GithubLogo } from '@phosphor-icons/react'
+import { CaretRight, LinkedinLogo, GithubLogo } from '@phosphor-icons/react'
 import { useSEO } from '@/hooks/useSEO'
 import { useAnalytics } from '@/hooks/useAnalytics'
 import { siteConfig } from '@/config/site'
@@ -42,7 +42,7 @@ export function LandingPage({ onEnterBlog }: LandingPageProps) {
               className="group flex items-center gap-2 text-foreground hover:text-muted-foreground transition-colors duration-200"
             >
               <span className="text-lg">Read posts</span>
-              <ArrowRight 
+              <CaretRight 
                 size={18} 
                 className="group-hover:translate-x-1 transition-transform duration-200" 
               />

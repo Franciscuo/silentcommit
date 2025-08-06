@@ -2,7 +2,7 @@ import React from 'react'
 import { BlogPost } from '@/lib/types'
 import { formatDate, calculateReadingTime } from '@/lib/blog-utils'
 import { MarkdownRenderer } from './MarkdownRenderer'
-import { ArrowLeft, Pencil } from '@phosphor-icons/react'
+import { CaretLeft, PencilSimple } from '@phosphor-icons/react'
 import { useSEO } from '@/hooks/useSEO'
 import { usePageView } from '@/hooks/useAnalytics'
 import { siteConfig } from '@/config/site'
@@ -39,7 +39,7 @@ export function PostView({ post, onBack, onEdit, showActions = false }: PostView
             onClick={onBack}
             className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors duration-200"
           >
-            <ArrowLeft size={16} />
+            <CaretLeft size={16} />
             <span>Back</span>
           </button>
           {showActions && onEdit && (
@@ -47,7 +47,7 @@ export function PostView({ post, onBack, onEdit, showActions = false }: PostView
               onClick={onEdit}
               className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors duration-200"
             >
-              <Pencil size={16} />
+              <PencilSimple size={16} />
               <span>Edit</span>
             </button>
           )}

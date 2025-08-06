@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { useKV } from '@github/spark/hooks'
-import { Button } from '@/components/ui/button'
 import { BlogPost } from '@/lib/types'
 import { sortPostsByDate, filterPostsByTag, getAllTags } from '@/lib/blog-utils'
 import { samplePost } from '@/lib/sample-data'
@@ -9,16 +7,38 @@ import { PostEditor } from '@/components/PostEditor'
 import { PostView } from '@/components/PostView'
 import { LandingPage } from '@/components/LandingPage'
 import { NotFoundPage } from '@/components/NotFoundPage'
-import { Plus, ArrowLeft, Pencil, Eye, Download } from '@phosphor-icons/react'
+import { PlusCircle, CaretLeft, DownloadSimple } from '@phosphor-icons/react'
 import { useSEO } from '@/hooks/useSEO'
 import { usePageView, useAnalytics } from '@/hooks/useAnalytics'
 import { siteConfig } from '@/config/site'
 import { downloadSitemap } from '@/lib/sitemap'
-// Import spark global shim for production builds
-import '@/lib/spark-global'
+
+// Custom hook to replace useKV with localStorage
+function useLocalStorage<T>(key: string, initialValue: T): [T, React.Dispatch<React.SetStateAction<T>>] {
+  const [storedValue, setStoredValue] = useState<T>(() => {
+    try {
+      const item = window.localStorage.getItem(key)
+      return item ? JSON.parse(item) : initialValue
+    } catch (error) {
+      return initialValue
+    }
+  })
+
+  const setValue: React.Dispatch<React.SetStateAction<T>> = (value) => {
+    try {
+      const valueToStore = value instanceof Function ? value(storedValue) : value
+      setStoredValue(valueToStore)
+      window.localStorage.setItem(key, JSON.stringify(valueToStore))
+    } catch (error) {
+      console.error('Error saving to localStorage:', error)
+    }
+  }
+
+  return [storedValue, setValue]
+}
 
 function App() {
-  const [posts, setPosts] = useKV<BlogPost[]>('blog-posts', [])
+  const [posts, setPosts] = useLocalStorage<BlogPost[]>('blog-posts', [])
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null)
   const [editingPost, setEditingPost] = useState<BlogPost | null>(null)
   const [isCreating, setIsCreating] = useState(false)
@@ -29,12 +49,10 @@ function App() {
 
   const { trackPostView, trackPostEdit, trackPostCreate, trackTagFilter } = useAnalytics()
 
-  // Check if current user is owner and handle 404 parameter
+  // Check for 404 parameter and handle owner status
   useEffect(() => {
-    // Stub for spark.user() - replace with actual implementation
-    Promise.resolve({ isOwner: true }).then(user => {
-      setIsOwner(user.isOwner)
-    })
+    // Set owner to true for local development/demo
+    setIsOwner(true)
     
     // Check for 404 parameter or session storage flag
     const urlParams = new URLSearchParams(window.location.search)
@@ -90,10 +108,6 @@ function App() {
       }
       return [...currentPosts, post]
     })
-  }
-
-  const handleDeletePost = (postId: string) => {
-    setPosts(currentPosts => currentPosts.filter(p => p.id !== postId))
   }
 
   const handleCreateNew = () => {
@@ -158,7 +172,7 @@ function App() {
             onClick={() => setCurrentView('landing')}
             className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors duration-200"
           >
-            <ArrowLeft size={16} />
+            <CaretLeft size={16} />
             <span>Back</span>
           </button>
         </header>
@@ -256,14 +270,14 @@ function App() {
               className="w-12 h-12 bg-muted text-foreground rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-shadow duration-200"
               title="Download Sitemap"
             >
-              <Download size={20} />
+              <DownloadSimple size={20} />
             </button>
             <button
               onClick={handleCreateNew}
               className="w-12 h-12 bg-foreground text-background rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-shadow duration-200"
               title="Create New Post"
             >
-              <Plus size={20} />
+              <PlusCircle size={20} />
             </button>
           </div>
         )}
