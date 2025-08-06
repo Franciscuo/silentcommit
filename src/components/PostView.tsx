@@ -17,11 +17,11 @@ export function PostView({ post, onBack, onEdit, showActions = false }: PostView
   const readingTime = calculateReadingTime(post.content)
 
   // Track page view for individual post
-  usePageView(`/post/${post.id}`, `${post.title} - Francisco's Dev Blog`)
+  usePageView(`/post/${post.id}`, `${post.title} - Silent Commit`)
 
   // Update SEO for individual post
   useSEO({
-    title: `${post.title} - Francisco's Dev Blog`,
+    title: `${post.title} - Silent Commit`,
     description: post.excerpt || post.content.substring(0, 160) + '...',
     keywords: `software development, coding, ${post.tags.join(', ')}`,
     ogTitle: post.title,

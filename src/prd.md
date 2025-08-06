@@ -1,4 +1,4 @@
-# Dev Blog - Product Requirements Document
+# Silent Commit - Product Requirements Document
 
 ## Core Purpose & Success
 

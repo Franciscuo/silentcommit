@@ -26,12 +26,12 @@ function App() {
   // Track page views based on current view
   usePageView(
     currentView === 'landing' ? '/' : '/posts',
-    currentView === 'landing' ? "Francisco's Dev Blog" : "Posts - Francisco's Dev Blog"
+    currentView === 'landing' ? "Silent Commit" : "Posts - Silent Commit"
   )
 
   // Set SEO for blog index page
   useSEO({
-    title: currentView === 'blog' ? "Posts - Francisco's Dev Blog" : "Francisco's Dev Blog - Software Development Insights",
+    title: currentView === 'blog' ? "Posts - Silent Commit" : "Silent Commit - Software Development Insights",
     description: "Browse software development posts covering React, TypeScript, system architecture, and modern web development practices.",
     keywords: "software development, coding, programming, react, typescript, web development, engineering, tech blog",
     canonical: currentView === 'blog' ? "https://yoursite.com/posts" : "https://yoursite.com"

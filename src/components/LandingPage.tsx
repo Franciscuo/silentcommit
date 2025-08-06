@@ -12,7 +12,7 @@ export function LandingPage({ onEnterBlog }: LandingPageProps) {
   
   // Set SEO for landing page
   useSEO({
-    title: "Francisco's Dev Blog - Software Development Insights",
+    title: "Silent Commit - Software Development Insights",
     description: "A developer's thoughts on software engineering, coding practices, and technology insights. Featuring posts on React, TypeScript, and modern web development.",
     keywords: "software development, coding, programming, react, typescript, web development, engineering, tech blog",
     canonical: "https://yoursite.com"
@@ -26,7 +26,7 @@ export function LandingPage({ onEnterBlog }: LandingPageProps) {
           {/* Header */}
           <div>
             <h1 className="text-4xl font-light tracking-tight text-foreground mb-6">
-              Developer Blog
+              Silent Commit
             </h1>
             <p className="text-lg text-muted-foreground leading-relaxed">
               Thoughts on software architecture, development practices, and building 
