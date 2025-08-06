@@ -14,7 +14,8 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': resolve(projectRoot, 'src'),
-      '@github/spark/hooks': resolve(projectRoot, 'src/lib/spark-shims.ts')
+      '@github/spark/hooks': resolve(projectRoot, 'src/lib/spark-shims.ts'),
+      '@github/spark/spark': resolve(projectRoot, 'src/lib/spark-global.ts')
     }
   },
   base: '/',
@@ -22,11 +23,21 @@ export default defineConfig({
     outDir: 'dist',
     sourcemap: false,
     rollupOptions: {
+      external: [],
       output: {
         manualChunks: {
           vendor: ['react', 'react-dom'],
         }
+      },
+      input: {
+        main: resolve(projectRoot, 'index.html'),
+        '404': resolve(projectRoot, '404.html')
       }
     }
-  }
+  },
+  define: {
+    // Define NODE_ENV for production
+    'process.env.NODE_ENV': '"production"'
+  },
+  publicDir: 'public'
 });
