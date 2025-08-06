@@ -1,23 +1,104 @@
-# ✨ Welcome to Your Spark Template!
-You've just launched your brand-new Spark Template Codespace — everything’s fired up and ready for you to explore, build, and create with Spark!
+# Silent Commit 
 
-This template is your blank canvas. It comes with a minimal setup to help you get started quickly with Spark development.
+A minimalist developer blog built with React, TypeScript, and Tailwind CSS. Features a clean dark theme, markdown support, and SEO optimization.
 
-🚀 What's Inside?
-- A clean, minimal Spark environment
-- Pre-configured for local development
-- Ready to scale with your ideas
-  
-🧠 What Can You Do?
+## 🚀 Features
 
-Right now, this is just a starting point — the perfect place to begin building and testing your Spark applications.
+- **Clean Design**: Minimalist dark theme optimized for reading
+- **Markdown Support**: Write posts in markdown with syntax highlighting
+- **SEO Optimized**: Meta tags, structured data, and sitemap generation
+- **Analytics**: Google Analytics integration
+- **Responsive**: Works great on all device sizes
+- **Fast**: Built with Vite for optimal performance
 
-🧹 Just Exploring?
-No problem! If you were just checking things out and don’t need to keep this code:
+## 📦 Tech Stack
 
-- Simply delete your Spark.
-- Everything will be cleaned up — no traces left behind.
+- **Framework**: React 19 + TypeScript
+- **Styling**: Tailwind CSS + Custom CSS variables
+- **Build Tool**: Vite
+- **UI Components**: Radix UI + shadcn/ui
+- **Icons**: Phosphor Icons
+- **Analytics**: Google Analytics 4
+- **Deployment**: GitHub Pages
 
-📄 License For Spark Template Resources 
+## 🏗️ Development
 
-The Spark Template files and resources from GitHub are licensed under the terms of the MIT license, Copyright GitHub, Inc.
+1. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+
+2. **Start development server:**
+   ```bash
+   npm run dev
+   ```
+
+3. **Build for production:**
+   ```bash
+   npm run build
+   ```
+
+4. **Preview production build:**
+   ```bash
+   npm run preview
+   ```
+
+## 🚀 Deployment to GitHub Pages
+
+The site is configured to automatically deploy to GitHub Pages when changes are pushed to the main branch.
+
+### Setup Instructions:
+
+1. **Enable GitHub Pages:**
+   - Go to your repository Settings
+   - Navigate to Pages section
+   - Source: "GitHub Actions"
+
+2. **Configure Custom Domain (Optional):**
+   - Update `public/CNAME` with your domain
+   - Update `src/config/site.ts` with your URL
+   - Configure DNS records with your domain provider
+
+3. **Push to Main Branch:**
+   ```bash
+   git add .
+   git commit -m "Initial deployment"
+   git push origin main
+   ```
+
+The GitHub Action will automatically build and deploy your site. Check the Actions tab for deployment status.
+
+## 📝 Content Management
+
+- Blog posts are stored in browser localStorage using the Spark KV system
+- Posts support markdown formatting
+- Tag-based filtering and search
+- Draft/published states
+- SEO metadata for each post
+
+## 🔧 Configuration
+
+Key configuration files:
+- `src/config/site.ts` - Site metadata and URLs
+- `src/index.css` - Theme colors and styling
+- `index.html` - SEO meta tags and analytics
+- `public/robots.txt` - Search engine directives
+- `public/CNAME` - Custom domain configuration
+
+## 📊 Analytics
+
+Google Analytics is pre-configured. Update the measurement ID in `index.html`:
+```html
+<script async src="https://www.googletagmanager.com/gtag/js?id=YOUR-GA-ID"></script>
+```
+
+## 🎨 Customization
+
+The site uses CSS custom properties for theming. Modify colors in `src/index.css`:
+```css
+:root {
+  --background: oklch(0.06 0 0);
+  --foreground: oklch(0.93 0 0);
+  /* ... other variables */
+}
+```
