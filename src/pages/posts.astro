@@ -1,0 +1,146 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getAllPosts, getAllTags } from '../data/posts';
+import { formatDate, calculateReadingTime } from '../lib/blog-utils';
+import { ArrowLeft } from '@phosphor-icons/react';
+
+const posts = getAllPosts();
+const allTags = getAllTags();
+---
+
+<Layout 
+  title="Posts - Silent Commit"
+  description="Browse software development posts covering React, TypeScript, system architecture, and modern web development practices."
+  keywords="software development, coding, programming, react, typescript, web development, engineering, tech blog"
+  canonical="https://silentcommit.com/posts"
+>
+  <main class="min-h-screen bg-background text-foreground">
+    <div class="max-w-3xl mx-auto px-8 py-16">
+      <!-- Header -->
+      <header class="flex items-center justify-between mb-16">
+        <a
+          href="/"
+          class="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors duration-200"
+        >
+          <ArrowLeft size={16} />
+          <span>Back</span>
+        </a>
+      </header>
+
+      <!-- Title -->
+      <div class="mb-12">
+        <h1 class="text-3xl font-light tracking-tight text-foreground mb-4">Posts</h1>
+        <div class="flex items-center gap-6 text-sm text-muted-foreground">
+          <span>Published ({posts.length})</span>
+        </div>
+      </div>
+
+      <!-- Tag Filter -->
+      {allTags.length > 0 && (
+        <div class="mb-8">
+          <div class="flex flex-wrap gap-2">
+            <button
+              data-tag=""
+              class="tag-filter px-3 py-1 text-sm rounded transition-colors duration-200 bg-foreground text-background"
+            >
+              All
+            </button>
+            {allTags.map(tag => (
+              <button
+                data-tag={tag}
+                class="tag-filter px-3 py-1 text-sm rounded transition-colors duration-200 text-muted-foreground hover:text-foreground"
+              >
+                {tag}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <!-- Posts List -->
+      <div class="space-y-8" id="posts-container">
+        {posts.map(post => (
+          <article class="post-card group" data-tags={post.tags.join(',')}>
+            <a href={`/posts/${post.id}`} class="block space-y-4 py-6 border-b border-border last:border-b-0">
+              <div class="space-y-3">
+                <h2 class="text-xl font-medium text-foreground group-hover:text-muted-foreground transition-colors duration-200">
+                  {post.title}
+                </h2>
+                <p class="text-muted-foreground leading-relaxed">
+                  {post.excerpt}
+                </p>
+              </div>
+              
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-4 text-sm text-muted-foreground">
+                  <time>{formatDate(post.createdAt)}</time>
+                  <span>•</span>
+                  <span>{calculateReadingTime(post.content)} min read</span>
+                </div>
+                
+                {post.tags.length > 0 && (
+                  <div class="flex items-center gap-2">
+                    {post.tags.slice(0, 2).map(tag => (
+                      <span class="text-xs px-2 py-1 bg-muted text-muted-foreground rounded">
+                        {tag}
+                      </span>
+                    ))}
+                    {post.tags.length > 2 && (
+                      <span class="text-xs text-muted-foreground">
+                        +{post.tags.length - 2}
+                      </span>
+                    )}
+                  </div>
+                )}
+              </div>
+            </a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  // Tag filtering functionality
+  document.addEventListener('DOMContentLoaded', () => {
+    const tagFilters = document.querySelectorAll('.tag-filter');
+    const postCards = document.querySelectorAll('.post-card');
+    
+    tagFilters.forEach(filter => {
+      filter.addEventListener('click', () => {
+        const selectedTag = filter.getAttribute('data-tag');
+        
+        // Update active filter styling
+        tagFilters.forEach(f => {
+          if (f === filter) {
+            f.className = 'tag-filter px-3 py-1 text-sm rounded transition-colors duration-200 bg-foreground text-background';
+          } else {
+            f.className = 'tag-filter px-3 py-1 text-sm rounded transition-colors duration-200 text-muted-foreground hover:text-foreground';
+          }
+        });
+        
+        // Filter posts
+        postCards.forEach(card => {
+          const cardTags = card.getAttribute('data-tags');
+          const shouldShow = !selectedTag || cardTags?.includes(selectedTag);
+          
+          if (shouldShow) {
+            card.style.display = 'block';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+  });
+</script>
+
+<style>
+  body {
+    font-family: 'Inter', sans-serif;
+    background-color: oklch(0.06 0 0);
+    color: oklch(0.93 0 0);
+    -webkit-font-smoothing: antialiased;
+  }
+</style>

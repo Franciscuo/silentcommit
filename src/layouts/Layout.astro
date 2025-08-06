@@ -1,0 +1,78 @@
+---
+export interface Props {
+  title: string;
+  description: string;
+  keywords?: string;
+  canonical?: string;
+}
+
+const { title, description, keywords, canonical } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  {keywords && <meta name="keywords" content={keywords} />}
+  <meta name="author" content="Francisco" />
+  <meta name="robots" content="index, follow" />
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content="https://silentcommit.com" />
+  <meta property="og:site_name" content="Silent Commit" />
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href={canonical || "https://silentcommit.com"} />
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <!-- Global Styles -->
+  <link rel="stylesheet" href="/src/styles/global.css">
+  
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9X2C17JTTJ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-9X2C17JTTJ');
+  </script>
+  
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "name": "Silent Commit",
+    "description": "A developer's thoughts on software engineering, coding practices, and technology insights",
+    "url": "https://silentcommit.com",
+    "author": {
+      "@type": "Person",
+      "name": "Francisco",
+      "url": "https://github.com/Franciscuo"
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Francisco"
+    }
+  }
+  </script>
+</head>
+<body>
+  <slot />
+</body>
+</html>
