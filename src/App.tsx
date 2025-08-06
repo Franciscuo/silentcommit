@@ -2,12 +2,12 @@ import React, { useState } from 'react'
 import { useKV } from '@github/spark/hooks'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { BlogPost } from '@/lib/types'
 import { sortPostsByDate, filterPostsByTag, getAllTags } from '@/lib/blog-utils'
 import { PostCard } from '@/components/PostCard'
 import { PostEditor } from '@/components/PostEditor'
 import { PostView } from '@/components/PostView'
+import { ThemeToggle } from '@/components/ThemeToggle'
 import { Plus, FileText, User } from '@phosphor-icons/react'
 
 function App() {
@@ -16,12 +16,12 @@ function App() {
   const [editingPost, setEditingPost] = useState<BlogPost | null>(null)
   const [isCreating, setIsCreating] = useState(false)
   const [selectedTag, setSelectedTag] = useState<string>('')
-  const [activeTab, setActiveTab] = useState<'published' | 'drafts'>('published')
+  const [showDrafts, setShowDrafts] = useState(false)
 
   const publishedPosts = posts.filter(post => post.published)
   const draftPosts = posts.filter(post => !post.published)
   
-  const currentPosts = activeTab === 'published' ? publishedPosts : draftPosts
+  const currentPosts = showDrafts ? draftPosts : publishedPosts
   const filteredPosts = sortPostsByDate(filterPostsByTag(currentPosts, selectedTag))
   const allTags = getAllTags(posts)
 
@@ -58,22 +58,23 @@ function App() {
 
   if (selectedPost) {
     return (
-      <div className="min-h-screen bg-background p-6">
-        <PostView
-          post={selectedPost}
-          onBack={() => setSelectedPost(null)}
-          onEdit={() => handleEditPost(selectedPost)}
-          showActions={true}
-        />
-      </div>
+      <PostView
+        post={selectedPost}
+        onBack={() => setSelectedPost(null)}
+        onEdit={() => handleEditPost(selectedPost)}
+        showActions={true}
+      />
     )
   }
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="max-w-6xl mx-auto p-6">
+      <div className="max-w-4xl mx-auto p-6">
         {/* Header */}
-        <header className="mb-12 text-center">
+        <header className="mb-12 text-center relative">
+          <div className="absolute top-0 right-0">
+            <ThemeToggle />
+          </div>
           <div className="flex items-center justify-center gap-3 mb-4">
             <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center">
               <User size={24} className="text-primary-foreground" />
@@ -85,20 +86,28 @@ function App() {
           </p>
         </header>
 
-        {/* Navigation */}
+        {/* Simple Navigation */}
         <div className="flex items-center justify-between mb-8">
-          <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as 'published' | 'drafts')}>
-            <TabsList>
-              <TabsTrigger value="published" className="flex items-center gap-2">
-                <FileText size={16} />
-                Published ({publishedPosts.length})
-              </TabsTrigger>
-              <TabsTrigger value="drafts" className="flex items-center gap-2">
+          <div className="flex items-center gap-4">
+            <Button
+              variant={!showDrafts ? 'default' : 'outline'}
+              onClick={() => setShowDrafts(false)}
+              className="flex items-center gap-2"
+            >
+              <FileText size={16} />
+              Published ({publishedPosts.length})
+            </Button>
+            {draftPosts.length > 0 && (
+              <Button
+                variant={showDrafts ? 'default' : 'outline'}
+                onClick={() => setShowDrafts(true)}
+                className="flex items-center gap-2"
+              >
                 <FileText size={16} />
                 Drafts ({draftPosts.length})
-              </TabsTrigger>
-            </TabsList>
-          </Tabs>
+              </Button>
+            )}
+          </div>
 
           <Button onClick={handleCreateNew} className="flex items-center gap-2">
             <Plus size={16} />
@@ -131,9 +140,9 @@ function App() {
           </div>
         )}
 
-        {/* Posts Grid */}
+        {/* Posts List */}
         {filteredPosts.length > 0 ? (
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div className="space-y-6">
             {filteredPosts.map(post => (
               <PostCard
                 key={post.id}
@@ -148,10 +157,10 @@ function App() {
           <div className="text-center py-16">
             <FileText size={64} className="mx-auto text-muted-foreground mb-4" />
             <h3 className="text-xl font-semibold mb-2">
-              {activeTab === 'published' ? 'No published posts yet' : 'No drafts yet'}
+              {!showDrafts ? 'No published posts yet' : 'No drafts yet'}
             </h3>
             <p className="text-muted-foreground mb-6">
-              {activeTab === 'published' 
+              {!showDrafts 
                 ? 'Start writing and share your thoughts with the world.'
                 : 'Create a new post to get started.'
               }

@@ -17,16 +17,17 @@ export function PostView({ post, onBack, onEdit, showActions = false }: PostView
   const readingTime = calculateReadingTime(post.content)
 
   return (
-    <div className="max-w-4xl mx-auto">
-      <div className="mb-6">
-        <Button
-          variant="ghost"
-          onClick={onBack}
-          className="mb-4 -ml-4"
-        >
-          <ArrowLeft size={16} className="mr-2" />
-          Back to posts
-        </Button>
+    <div className="min-h-screen bg-background p-6">
+      <div className="max-w-4xl mx-auto">
+        <div className="mb-6">
+          <Button
+            variant="ghost"
+            onClick={onBack}
+            className="mb-4 -ml-4"
+          >
+            <ArrowLeft size={16} className="mr-2" />
+            Back to posts
+          </Button>
 
         <div className="flex items-start justify-between gap-4 mb-4">
           <h1 className="text-4xl font-bold text-foreground leading-tight">
@@ -69,5 +70,6 @@ export function PostView({ post, onBack, onEdit, showActions = false }: PostView
         <MarkdownRenderer content={post.content} />
       </article>
     </div>
+  </div>
   )
 }

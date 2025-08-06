@@ -17,10 +17,10 @@ export function PostCard({ post, onRead, onEdit, showActions = false }: PostCard
   const readingTime = calculateReadingTime(post.content)
 
   return (
-    <Card className="transition-all duration-200 hover:shadow-lg hover:-translate-y-1 cursor-pointer group">
+    <Card className="transition-all duration-200 hover:shadow-lg cursor-pointer group">
       <CardHeader onClick={onRead} className="pb-3">
         <div className="flex items-start justify-between gap-4">
-          <h3 className="text-xl font-semibold text-foreground group-hover:text-accent transition-colors line-clamp-2">
+          <h3 className="text-2xl font-semibold text-foreground group-hover:text-accent transition-colors">
             {post.title}
           </h3>
           {!post.published && (
@@ -43,22 +43,17 @@ export function PostCard({ post, onRead, onEdit, showActions = false }: PostCard
       </CardHeader>
 
       <CardContent onClick={onRead} className="pt-0 pb-4">
-        <p className="text-muted-foreground leading-relaxed line-clamp-3 mb-4">
+        <p className="text-muted-foreground leading-relaxed mb-4">
           {post.excerpt}
         </p>
         
         <div className="flex items-center justify-between">
           <div className="flex flex-wrap gap-2">
-            {post.tags.slice(0, 3).map(tag => (
+            {post.tags.map(tag => (
               <Badge key={tag} variant="outline" className="text-xs">
                 {tag}
               </Badge>
             ))}
-            {post.tags.length > 3 && (
-              <Badge variant="outline" className="text-xs">
-                +{post.tags.length - 3}
-              </Badge>
-            )}
           </div>
           
           {showActions && onEdit && (
