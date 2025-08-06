@@ -1,14 +1,16 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useKV } from '@github/spark/hooks'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { BlogPost } from '@/lib/types'
 import { sortPostsByDate, filterPostsByTag, getAllTags } from '@/lib/blog-utils'
+import { samplePost } from '@/lib/sample-data'
 import { PostCard } from '@/components/PostCard'
 import { PostEditor } from '@/components/PostEditor'
 import { PostView } from '@/components/PostView'
 import { ThemeToggle } from '@/components/ThemeToggle'
-import { Plus, FileText, User } from '@phosphor-icons/react'
+import { LandingPage } from '@/components/LandingPage'
+import { Plus, FileText, User, ArrowLeft, Home } from '@phosphor-icons/react'
 
 function App() {
   const [posts, setPosts] = useKV<BlogPost[]>('blog-posts', [])
@@ -17,6 +19,14 @@ function App() {
   const [isCreating, setIsCreating] = useState(false)
   const [selectedTag, setSelectedTag] = useState<string>('')
   const [showDrafts, setShowDrafts] = useState(false)
+  const [currentView, setCurrentView] = useState<'landing' | 'blog'>('landing')
+
+  // Initialize with sample post if no posts exist
+  useEffect(() => {
+    if (posts.length === 0) {
+      setPosts([samplePost])
+    }
+  }, [posts.length, setPosts])
 
   const publishedPosts = posts.filter(post => post.published)
   const draftPosts = posts.filter(post => !post.published)
@@ -56,6 +66,11 @@ function App() {
     setEditingPost(null)
   }
 
+  // Show landing page
+  if (currentView === 'landing') {
+    return <LandingPage onEnterBlog={() => setCurrentView('blog')} />
+  }
+
   if (selectedPost) {
     return (
       <PostView
@@ -72,6 +87,17 @@ function App() {
       <div className="max-w-4xl mx-auto p-6">
         {/* Header */}
         <header className="mb-12 text-center relative">
+          <div className="absolute top-0 left-0">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setCurrentView('landing')}
+              className="flex items-center gap-2"
+            >
+              <Home size={16} />
+              Home
+            </Button>
+          </div>
           <div className="absolute top-0 right-0">
             <ThemeToggle />
           </div>
