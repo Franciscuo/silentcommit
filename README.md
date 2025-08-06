@@ -35,13 +35,20 @@ A minimalist developer blog built with React, TypeScript, and Tailwind CSS. Feat
 
 3. **Build for production:**
    ```bash
-   npm run build
+   npm run build        # Production build (for GitHub Pages)
+   npm run build:dev    # Development build (with Spark features)
    ```
 
 4. **Preview production build:**
    ```bash
    npm run preview
    ```
+
+### Build Configuration
+
+The application has two build configurations:
+- **Production (`npm run build`)**: Uses `vite.config.prod.ts` without Spark dependencies for GitHub Pages deployment
+- **Development (`npm run build:dev`)**: Uses `vite.config.ts` with full Spark feature support
 
 ## 🚀 Deployment to GitHub Pages
 
@@ -66,11 +73,11 @@ The site is configured to automatically deploy to GitHub Pages when changes are 
    git push origin main
    ```
 
-The GitHub Action will automatically build and deploy your site. Check the Actions tab for deployment status.
+The GitHub Action will automatically build and deploy your site using the production configuration. Check the Actions tab for deployment status.
 
 ## 📝 Content Management
 
-- Blog posts are stored in browser localStorage using the Spark KV system
+- Blog posts are stored in browser localStorage (production) or Spark KV (development)
 - Posts support markdown formatting
 - Tag-based filtering and search
 - Draft/published states

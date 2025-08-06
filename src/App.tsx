@@ -14,6 +14,8 @@ import { useSEO } from '@/hooks/useSEO'
 import { usePageView, useAnalytics } from '@/hooks/useAnalytics'
 import { siteConfig } from '@/config/site'
 import { downloadSitemap } from '@/lib/sitemap'
+// Import spark global shim for production builds
+import '@/lib/spark-global'
 
 function App() {
   const [posts, setPosts] = useKV<BlogPost[]>('blog-posts', [])

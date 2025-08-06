@@ -7,6 +7,20 @@ This guide will help you deploy your Silent Commit blog to GitHub Pages using th
 - Your code is in a GitHub repository
 - You have admin access to the repository
 
+## Production Build Configuration
+
+The application has been configured for production deployment with special handling for Spark dependencies:
+
+### Build System
+- **Development**: Uses `vite.config.ts` with Spark plugins
+- **Production**: Uses `vite.config.prod.ts` without Spark dependencies
+- **Compatibility**: Includes shims to maintain functionality in standard environments
+
+### Spark Compatibility
+- `src/lib/spark-shims.ts`: Provides localStorage-based `useKV` implementation
+- `src/lib/spark-global.ts`: Creates mock `spark` global object
+- All Spark functionality gracefully degrades to standard web APIs
+
 ## Deployment Steps
 
 ### 1. Enable GitHub Pages
@@ -69,12 +83,17 @@ If you want to use your custom domain (silentcommit.com):
 
 The GitHub Action (`.github/workflows/deploy.yml`) automatically:
 
-1. **Builds** your React app using Vite
-2. **Optimizes** assets for production
+1. **Builds** your React app using production configuration
+2. **Optimizes** assets for production without Spark dependencies
 3. **Deploys** to GitHub Pages
 4. **Updates** your live site
 
 ## Troubleshooting
+
+### Build Fails with Spark Dependencies
+- The production build uses `vite.config.prod.ts` which excludes Spark plugins
+- Verify that `npm run build` works (uses production config)
+- Check that all imports use aliased paths correctly
 
 ### Build Fails
 - Check the Actions tab for error details
@@ -104,19 +123,34 @@ public/
 src/
 ├── config/
 │   └── site.ts            # Site URL configuration
+├── lib/
+│   ├── spark-shims.ts     # useKV implementation for production
+│   └── spark-global.ts    # Mock spark object for production
 └── ...                    # Your app code
+vite.config.ts              # Development config (with Spark)
+vite.config.prod.ts         # Production config (without Spark)
 ```
+
+## Production Features
+
+In the production build:
+- **Data Persistence**: Uses localStorage instead of Spark KV
+- **User Management**: Returns mock user data (no admin features)
+- **LLM Integration**: Disabled with warning messages
+- **Analytics**: Full Google Analytics tracking maintained
+- **SEO**: Complete meta tags and structured data
 
 ## Updates and Maintenance
 
 - **Automatic Deployment**: Every push to main branch triggers a new deployment
 - **Manual Deployment**: Use the "Run workflow" button in Actions tab
 - **Domain Changes**: Update CNAME file and repository settings
+- **Local Testing**: Use `npm run build:dev` to test with Spark features
 
 ## Analytics and Monitoring
 
 Your site includes:
-- **Google Analytics**: Tracks visitor behavior
+- **Google Analytics**: Tracks visitor behavior (G-9X2C17JTTJ)
 - **Sitemap**: Generated automatically for SEO
 - **SEO Meta Tags**: Optimized for search engines
 
