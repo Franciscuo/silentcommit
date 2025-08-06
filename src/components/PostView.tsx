@@ -5,6 +5,7 @@ import { MarkdownRenderer } from './MarkdownRenderer'
 import { ArrowLeft, Edit3 } from '@phosphor-icons/react'
 import { useSEO } from '@/hooks/useSEO'
 import { usePageView } from '@/hooks/useAnalytics'
+import { siteConfig } from '@/config/site'
 
 interface PostViewProps {
   post: BlogPost
@@ -17,16 +18,16 @@ export function PostView({ post, onBack, onEdit, showActions = false }: PostView
   const readingTime = calculateReadingTime(post.content)
 
   // Track page view for individual post
-  usePageView(`/post/${post.id}`, `${post.title} - Silent Commit`)
+  usePageView(`/post/${post.id}`, `${post.title} - ${siteConfig.name}`)
 
   // Update SEO for individual post
   useSEO({
-    title: `${post.title} - Silent Commit`,
+    title: `${post.title} - ${siteConfig.name}`,
     description: post.excerpt || post.content.substring(0, 160) + '...',
     keywords: `software development, coding, ${post.tags.join(', ')}`,
     ogTitle: post.title,
     ogDescription: post.excerpt || post.content.substring(0, 160) + '...',
-    canonical: `https://yoursite.com/post/${post.id}`
+    canonical: `${siteConfig.url}/post/${post.id}`
   })
 
   return (
@@ -93,15 +94,15 @@ export function PostView({ post, onBack, onEdit, showActions = false }: PostView
               description: post.excerpt || post.content.substring(0, 160),
               author: {
                 '@type': 'Person',
-                name: 'Francisco',
-                url: 'https://github.com/Franciscuo'
+                name: siteConfig.author.name,
+                url: siteConfig.author.github
               },
               datePublished: post.createdAt,
               dateModified: post.updatedAt || post.createdAt,
               keywords: post.tags.join(', '),
               publisher: {
                 '@type': 'Person',
-                name: 'Francisco'
+                name: siteConfig.author.name
               }
             })
           }}

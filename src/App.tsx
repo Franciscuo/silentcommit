@@ -8,9 +8,11 @@ import { PostCard } from '@/components/PostCard'
 import { PostEditor } from '@/components/PostEditor'
 import { PostView } from '@/components/PostView'
 import { LandingPage } from '@/components/LandingPage'
-import { Plus, ArrowLeft, Edit3, Eye } from '@phosphor-icons/react'
+import { Plus, ArrowLeft, Edit3, Eye, Download } from '@phosphor-icons/react'
 import { useSEO } from '@/hooks/useSEO'
 import { usePageView, useAnalytics } from '@/hooks/useAnalytics'
+import { siteConfig } from '@/config/site'
+import { downloadSitemap } from '@/lib/sitemap'
 
 function App() {
   const [posts, setPosts] = useKV<BlogPost[]>('blog-posts', [])
@@ -20,8 +22,16 @@ function App() {
   const [selectedTag, setSelectedTag] = useState<string>('')
   const [showDrafts, setShowDrafts] = useState(false)
   const [currentView, setCurrentView] = useState<'landing' | 'blog'>('landing')
+  const [isOwner, setIsOwner] = useState(false)
 
   const { trackPostView, trackPostEdit, trackPostCreate, trackTagFilter } = useAnalytics()
+
+  // Check if current user is owner
+  useEffect(() => {
+    spark.user().then(user => {
+      setIsOwner(user.isOwner)
+    })
+  }, [])
 
   // Track page views based on current view
   usePageView(
@@ -31,10 +41,10 @@ function App() {
 
   // Set SEO for blog index page
   useSEO({
-    title: currentView === 'blog' ? "Posts - Silent Commit" : "Silent Commit - Software Development Insights",
-    description: "Browse software development posts covering React, TypeScript, system architecture, and modern web development practices.",
+    title: currentView === 'blog' ? `Posts - ${siteConfig.name}` : `${siteConfig.name} - Software Development Insights`,
+    description: currentView === 'blog' ? "Browse software development posts covering React, TypeScript, system architecture, and modern web development practices." : siteConfig.description,
     keywords: "software development, coding, programming, react, typescript, web development, engineering, tech blog",
-    canonical: currentView === 'blog' ? "https://yoursite.com/posts" : "https://yoursite.com"
+    canonical: currentView === 'blog' ? `${siteConfig.url}/posts` : siteConfig.url
   })
 
   // Initialize with sample post if no posts exist
@@ -203,14 +213,24 @@ function App() {
         )}
 
         {/* Floating Create Button */}
-        <div className="fixed bottom-8 right-8">
-          <button
-            onClick={handleCreateNew}
-            className="w-12 h-12 bg-foreground text-background rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-shadow duration-200"
-          >
-            <Plus size={20} />
-          </button>
-        </div>
+        {isOwner && (
+          <div className="fixed bottom-8 right-8 flex flex-col gap-3">
+            <button
+              onClick={() => downloadSitemap(posts)}
+              className="w-12 h-12 bg-muted text-foreground rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-shadow duration-200"
+              title="Download Sitemap"
+            >
+              <Download size={20} />
+            </button>
+            <button
+              onClick={handleCreateNew}
+              className="w-12 h-12 bg-foreground text-background rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-shadow duration-200"
+              title="Create New Post"
+            >
+              <Plus size={20} />
+            </button>
+          </div>
+        )}
 
         {/* Post Editor */}
         <PostEditor

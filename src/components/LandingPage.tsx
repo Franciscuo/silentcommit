@@ -2,6 +2,7 @@ import React from 'react'
 import { ArrowRight, LinkedinLogo, GithubLogo } from '@phosphor-icons/react'
 import { useSEO } from '@/hooks/useSEO'
 import { useAnalytics } from '@/hooks/useAnalytics'
+import { siteConfig } from '@/config/site'
 
 interface LandingPageProps {
   onEnterBlog: () => void
@@ -12,10 +13,10 @@ export function LandingPage({ onEnterBlog }: LandingPageProps) {
   
   // Set SEO for landing page
   useSEO({
-    title: "Silent Commit - Software Development Insights",
-    description: "A developer's thoughts on software engineering, coding practices, and technology insights. Featuring posts on React, TypeScript, and modern web development.",
+    title: `${siteConfig.name} - Software Development Insights`,
+    description: siteConfig.description,
     keywords: "software development, coding, programming, react, typescript, web development, engineering, tech blog",
-    canonical: "https://yoursite.com"
+    canonical: siteConfig.url
   })
 
   return (
@@ -26,7 +27,7 @@ export function LandingPage({ onEnterBlog }: LandingPageProps) {
           {/* Header */}
           <div>
             <h1 className="text-4xl font-light tracking-tight text-foreground mb-6">
-              Silent Commit
+              {siteConfig.name}
             </h1>
             <p className="text-lg text-muted-foreground leading-relaxed">
               Thoughts on software architecture, development practices, and building 
@@ -65,7 +66,7 @@ export function LandingPage({ onEnterBlog }: LandingPageProps) {
             <h2 className="text-xl font-light text-foreground mb-4">Connect</h2>
             <div className="flex gap-6">
               <a
-                href="https://www.linkedin.com/in/franciscuo/"
+                href={siteConfig.social.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => trackSocialClick('linkedin')}
@@ -74,7 +75,7 @@ export function LandingPage({ onEnterBlog }: LandingPageProps) {
                 <LinkedinLogo size={20} />
               </a>
               <a
-                href="https://github.com/Franciscuo"
+                href={siteConfig.social.github}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => trackSocialClick('github')}
