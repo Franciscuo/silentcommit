@@ -1,5 +1,5 @@
 import React from 'react'
-import { ArrowRight, LinkedinLogo, GithubLogo, TwitterLogo } from '@phosphor-icons/react'
+import { ArrowRight, LinkedinLogo, GithubLogo } from '@phosphor-icons/react'
 
 interface LandingPageProps {
   onEnterBlog: () => void
@@ -53,25 +53,20 @@ export function LandingPage({ onEnterBlog }: LandingPageProps) {
             <h2 className="text-xl font-light text-foreground mb-4">Connect</h2>
             <div className="flex gap-6">
               <a
-                href="#"
+                href="https://www.linkedin.com/in/franciscuo/"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-foreground transition-colors duration-200"
-                onClick={(e) => e.preventDefault()}
               >
                 <LinkedinLogo size={20} />
               </a>
               <a
-                href="#"
+                href="https://github.com/Franciscuo"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-foreground transition-colors duration-200"
-                onClick={(e) => e.preventDefault()}
               >
                 <GithubLogo size={20} />
-              </a>
-              <a
-                href="#"
-                className="text-muted-foreground hover:text-foreground transition-colors duration-200"
-                onClick={(e) => e.preventDefault()}
-              >
-                <TwitterLogo size={20} />
               </a>
             </div>
           </div>
