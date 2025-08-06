@@ -10,6 +10,7 @@ import { PostView } from '@/components/PostView'
 import { LandingPage } from '@/components/LandingPage'
 import { Plus, ArrowLeft, Edit3, Eye } from '@phosphor-icons/react'
 import { useSEO } from '@/hooks/useSEO'
+import { usePageView, useAnalytics } from '@/hooks/useAnalytics'
 
 function App() {
   const [posts, setPosts] = useKV<BlogPost[]>('blog-posts', [])
@@ -19,6 +20,14 @@ function App() {
   const [selectedTag, setSelectedTag] = useState<string>('')
   const [showDrafts, setShowDrafts] = useState(false)
   const [currentView, setCurrentView] = useState<'landing' | 'blog'>('landing')
+
+  const { trackPostView, trackPostEdit, trackPostCreate, trackTagFilter } = useAnalytics()
+
+  // Track page views based on current view
+  usePageView(
+    currentView === 'landing' ? '/' : '/posts',
+    currentView === 'landing' ? "Francisco's Dev Blog" : "Posts - Francisco's Dev Blog"
+  )
 
   // Set SEO for blog index page
   useSEO({
@@ -59,11 +68,13 @@ function App() {
   }
 
   const handleCreateNew = () => {
+    trackPostCreate()
     setIsCreating(true)
     setEditingPost(null)
   }
 
   const handleEditPost = (post: BlogPost) => {
+    trackPostEdit(post.id)
     setEditingPost(post)
     setIsCreating(true)
   }
@@ -129,7 +140,10 @@ function App() {
           <div className="mb-8">
             <div className="flex flex-wrap gap-2">
               <button
-                onClick={() => setSelectedTag('')}
+                onClick={() => {
+                  setSelectedTag('')
+                  trackTagFilter('all')
+                }}
                 className={`px-3 py-1 text-sm rounded transition-colors duration-200 ${
                   selectedTag === '' 
                     ? 'bg-foreground text-background' 
@@ -141,7 +155,10 @@ function App() {
               {allTags.map(tag => (
                 <button
                   key={tag}
-                  onClick={() => setSelectedTag(tag)}
+                  onClick={() => {
+                    setSelectedTag(tag)
+                    trackTagFilter(tag)
+                  }}
                   className={`px-3 py-1 text-sm rounded transition-colors duration-200 ${
                     selectedTag === tag 
                       ? 'bg-foreground text-background' 
@@ -162,7 +179,10 @@ function App() {
               <PostCard
                 key={post.id}
                 post={post}
-                onRead={() => setSelectedPost(post)}
+                onRead={() => {
+                  trackPostView(post.id, post.title)
+                  setSelectedPost(post)
+                }}
                 onEdit={() => handleEditPost(post)}
                 showActions={true}
               />

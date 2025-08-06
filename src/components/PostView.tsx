@@ -4,6 +4,7 @@ import { formatDate, calculateReadingTime } from '@/lib/blog-utils'
 import { MarkdownRenderer } from './MarkdownRenderer'
 import { ArrowLeft, Edit3 } from '@phosphor-icons/react'
 import { useSEO } from '@/hooks/useSEO'
+import { usePageView } from '@/hooks/useAnalytics'
 
 interface PostViewProps {
   post: BlogPost
@@ -14,6 +15,9 @@ interface PostViewProps {
 
 export function PostView({ post, onBack, onEdit, showActions = false }: PostViewProps) {
   const readingTime = calculateReadingTime(post.content)
+
+  // Track page view for individual post
+  usePageView(`/post/${post.id}`, `${post.title} - Francisco's Dev Blog`)
 
   // Update SEO for individual post
   useSEO({

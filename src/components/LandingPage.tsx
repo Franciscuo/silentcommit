@@ -1,12 +1,15 @@
 import React from 'react'
 import { ArrowRight, LinkedinLogo, GithubLogo } from '@phosphor-icons/react'
 import { useSEO } from '@/hooks/useSEO'
+import { useAnalytics } from '@/hooks/useAnalytics'
 
 interface LandingPageProps {
   onEnterBlog: () => void
 }
 
 export function LandingPage({ onEnterBlog }: LandingPageProps) {
+  const { trackSocialClick } = useAnalytics()
+  
   // Set SEO for landing page
   useSEO({
     title: "Francisco's Dev Blog - Software Development Insights",
@@ -65,6 +68,7 @@ export function LandingPage({ onEnterBlog }: LandingPageProps) {
                 href="https://www.linkedin.com/in/franciscuo/"
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackSocialClick('linkedin')}
                 className="text-muted-foreground hover:text-foreground transition-colors duration-200"
               >
                 <LinkedinLogo size={20} />
@@ -73,6 +77,7 @@ export function LandingPage({ onEnterBlog }: LandingPageProps) {
                 href="https://github.com/Franciscuo"
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackSocialClick('github')}
                 className="text-muted-foreground hover:text-foreground transition-colors duration-200"
               >
                 <GithubLogo size={20} />
