@@ -1,4 +1,3 @@
----
 import type { APIRoute } from 'astro';
 import { getAllPosts } from '../data/posts';
 

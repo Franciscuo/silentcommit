@@ -31,7 +31,8 @@ function App() {
 
   // Check if current user is owner and handle 404 parameter
   useEffect(() => {
-    spark.user().then(user => {
+    // Stub for spark.user() - replace with actual implementation
+    Promise.resolve({ isOwner: true }).then(user => {
       setIsOwner(user.isOwner)
     })
     

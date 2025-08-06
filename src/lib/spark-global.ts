@@ -37,7 +37,7 @@ if (typeof window !== 'undefined' && !window.spark) {
     
     kv: {
       keys: async () => {
-        const keys = []
+        const keys: string[] = []
         for (let i = 0; i < localStorage.length; i++) {
           const key = localStorage.key(i)
           if (key?.startsWith('kv_')) {

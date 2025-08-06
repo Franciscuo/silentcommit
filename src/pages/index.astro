@@ -1,6 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { Github, Linkedin } from '@phosphor-icons/react';
+import { GithubLogo, LinkedinLogo } from '@phosphor-icons/react';
 ---
 
 <Layout 
@@ -9,22 +9,31 @@ import { Github, Linkedin } from '@phosphor-icons/react';
   keywords="software development, coding, programming, react, typescript, web development, engineering, tech blog"
 >
   <main class="min-h-screen bg-background text-foreground">
-    <!-- Hero Section -->
+    <!-- Main Section -->
     <section class="relative min-h-screen flex items-center justify-center px-8">
-      <div class="max-w-4xl mx-auto text-center space-y-8">
-        <div class="space-y-4">
+      <div class="max-w-4xl mx-auto text-center space-y-12">
+        <div class="space-y-8">
           <h1 class="text-6xl font-light tracking-tight text-foreground">
             Silent Commit
           </h1>
           <p class="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            A developer's thoughts on software engineering, coding practices, and technology insights
+            Insights on software engineering, architecture, and development practices
           </p>
+          
+          <div class="space-y-4 text-foreground leading-relaxed max-w-2xl mx-auto text-center">
+            <p>
+              Practical knowledge from building and maintaining production systems. Focus on actionable insights for modern software development.
+            </p>
+            <p>
+              System architecture • React patterns • TypeScript best practices • Real-world engineering solutions
+            </p>
+          </div>
         </div>
         
         <div class="flex items-center justify-center gap-8 pt-8">
           <a 
             href="/posts" 
-            class="px-8 py-3 bg-foreground text-background rounded transition-colors hover:bg-muted-foreground"
+            class="px-6 py-2 bg-foreground text-background rounded transition-colors hover:bg-muted-foreground text-sm"
           >
             Read Posts
           </a>
@@ -36,7 +45,7 @@ import { Github, Linkedin } from '@phosphor-icons/react';
               class="text-muted-foreground hover:text-foreground transition-colors"
               aria-label="GitHub Profile"
             >
-              <Github size={24} />
+              <GithubLogo size={24} />
             </a>
             <a 
               href="https://www.linkedin.com/in/franciscuo/" 
@@ -45,82 +54,9 @@ import { Github, Linkedin } from '@phosphor-icons/react';
               class="text-muted-foreground hover:text-foreground transition-colors"
               aria-label="LinkedIn Profile"
             >
-              <Linkedin size={24} />
+              <LinkedinLogo size={24} />
             </a>
           </div>
-        </div>
-      </div>
-    </section>
-    
-    <!-- About Section -->
-    <section class="py-24 px-8 border-t border-border">
-      <div class="max-w-3xl mx-auto">
-        <h2 class="text-3xl font-light mb-8 text-foreground">About</h2>
-        <div class="space-y-6 text-foreground leading-relaxed">
-          <p>
-            Welcome to Silent Commit, where I share insights from my journey in software development. 
-            This blog focuses on practical knowledge gained from building and maintaining systems in production.
-          </p>
-          <p>
-            You'll find posts about system architecture, React patterns, TypeScript best practices, 
-            and lessons learned from real-world projects. Each post aims to provide actionable insights 
-            that you can apply to your own development work.
-          </p>
-          <p>
-            I believe in sharing knowledge openly and helping other developers navigate the complexities 
-            of modern software development. Whether you're debugging production issues, designing scalable 
-            systems, or optimizing performance, there's something here for you.
-          </p>
-        </div>
-      </div>
-    </section>
-    
-    <!-- Recent Posts Preview -->
-    <section class="py-24 px-8 border-t border-border">
-      <div class="max-w-3xl mx-auto">
-        <div class="flex items-center justify-between mb-12">
-          <h2 class="text-3xl font-light text-foreground">Latest Posts</h2>
-          <a 
-            href="/posts" 
-            class="text-muted-foreground hover:text-foreground transition-colors"
-          >
-            View all →
-          </a>
-        </div>
-        
-        <div class="space-y-8">
-          <!-- These will be populated by Astro's static generation -->
-          <article class="group">
-            <a href="/posts/building-resilient-systems" class="block space-y-3">
-              <h3 class="text-xl font-medium text-foreground group-hover:text-muted-foreground transition-colors">
-                Building Resilient Systems: Lessons from Production
-              </h3>
-              <p class="text-muted-foreground">
-                After years of building and maintaining systems in production, I've learned that resilience isn't just about handling errors—it's about designing systems that gracefully degrade and recover from unexpected failures.
-              </p>
-              <div class="flex items-center gap-4 text-sm text-muted-foreground">
-                <time>January 15, 2024</time>
-                <span>•</span>
-                <span>8 min read</span>
-              </div>
-            </a>
-          </article>
-          
-          <article class="group">
-            <a href="/posts/typescript-patterns-real-world" class="block space-y-3">
-              <h3 class="text-xl font-medium text-foreground group-hover:text-muted-foreground transition-colors">
-                TypeScript Patterns That Actually Matter in Real Projects
-              </h3>
-              <p class="text-muted-foreground">
-                TypeScript has transformed how we write JavaScript, but not all patterns are created equal. Here are the patterns that consistently add value without unnecessary complexity.
-              </p>
-              <div class="flex items-center gap-4 text-sm text-muted-foreground">
-                <time>January 20, 2024</time>
-                <span>•</span>
-                <span>6 min read</span>
-              </div>
-            </a>
-          </article>
         </div>
       </div>
     </section>

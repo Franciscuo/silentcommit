@@ -1,8 +1,8 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import { getAllPosts, getPostById } from '../../data/posts';
+import { getAllPosts } from '../../data/posts';
 import { formatDate, calculateReadingTime } from '../../lib/blog-utils';
-import { ArrowLeft, Github, Linkedin } from '@phosphor-icons/react';
+import { ArrowLeft, GithubLogo, LinkedinLogo } from '@phosphor-icons/react';
 import { marked } from 'marked';
 
 export async function getStaticPaths() {
@@ -91,7 +91,7 @@ const htmlContent = marked(post.content);
                 class="text-muted-foreground hover:text-foreground transition-colors"
                 aria-label="GitHub Profile"
               >
-                <Github size={20} />
+                <GithubLogo size={20} />
               </a>
               <a 
                 href="https://www.linkedin.com/in/franciscuo/" 
@@ -100,7 +100,7 @@ const htmlContent = marked(post.content);
                 class="text-muted-foreground hover:text-foreground transition-colors"
                 aria-label="LinkedIn Profile"
               >
-                <Linkedin size={20} />
+                <LinkedinLogo size={20} />
               </a>
             </div>
           </div>

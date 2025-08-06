@@ -126,9 +126,9 @@ const allTags = getAllTags();
           const shouldShow = !selectedTag || cardTags?.includes(selectedTag);
           
           if (shouldShow) {
-            card.style.display = 'block';
+            card.setAttribute('style', 'display: block');
           } else {
-            card.style.display = 'none';
+            card.setAttribute('style', 'display: none');
           }
         });
       });
